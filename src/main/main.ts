@@ -14,6 +14,8 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { Category } from '../model';
+import saveData, { loadData } from './save_manager';
 
 class AppUpdater {
   constructor() {
@@ -29,6 +31,23 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.on('save', async (event, arg: Category[]) => {
+  saveData(arg);
+  event.reply('save', 'Saved data');
+});
+
+ipcMain.on('load-save', async (event) => {
+  const loadedData = loadData();
+  // Do I use reply or returnValue?
+
+  event.reply('load-save', loadedData);
+});
+
+ipcMain.handle('load-save', async () => {
+  const loadedData = loadData();
+  return loadedData;
 });
 
 if (process.env.NODE_ENV === 'production') {
