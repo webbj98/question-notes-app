@@ -21,9 +21,14 @@ const electronHandler = {
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
+    loadSave: () => ipcRenderer.invoke('load-save'),
   },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
+
+// contextBridge.exposeInMainWorld('electronAPI', {
+//   loadSave: () => ipcRenderer.invoke('load-save'),
+// });
 
 export type ElectronHandler = typeof electronHandler;

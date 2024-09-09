@@ -1,5 +1,4 @@
-import React from 'react';
-import { ipcRenderer } from 'electron';
+import React, { useEffect, useState } from 'react';
 import Category from '../components/category';
 import { Category as CategoryType } from '../../model';
 // import { ipcRenderer } from 'electron';
@@ -47,22 +46,33 @@ const TEST_DATA: CategoryType[] = [
   },
 ];
 const CategoryQuestionPage: React.FC = () => {
-  const displayCategories = TEST_DATA.map((category) => (
-    <Category category={category} />
-  ));
+  const [categoryData, setCategoryData] = useState<CategoryType[]>([]);
+
+  // useEffect(()=> {
+
+
+
+  // }, [])
+
+
 
   const handleSaveData = () => {
     console.log('sent save message');
-    window.electron.ipcRenderer.sendMessage('save', TEST_DATA);
+    window.electron.ipcRenderer.sendMessage('save', categoryData);
   };
 
   const handleLoadSaveData = async () => {
     console.log('sent load save');
     // window.electron.ipcRenderer.sendMessage('load-save');
-    // const result = await ipcRenderer.invoke('load-save');
-    // console.log(result);
+    const result = await window.electron.ipcRenderer.loadSave();
+    console.log(result);
+    setCategoryData(result);
     // return result;
   };
+
+  const displayCategories = categoryData.map((category) => (
+    <Category category={category} />
+  ));
 
   return (
     <div>
