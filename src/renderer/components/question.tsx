@@ -4,7 +4,7 @@ import { Question as QuestionType } from '../../model';
 const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
   return (
     <div>
-      <h2>{question.title}</h2>
+      <h4>{question.title}</h4>
       <p>Time: {question.time}</p>
     </div>
   );

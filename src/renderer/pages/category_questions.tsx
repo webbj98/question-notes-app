@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Category from '../components/category';
-import { Category as CategoryType } from '../../model';
+import { Category as CategoryType, Question } from '../../model';
+import CreateCategory from './create_category';
 // import { ipcRenderer } from 'electron';
 
 // const CATEGORIES = [
@@ -48,13 +49,17 @@ const TEST_DATA: CategoryType[] = [
 const CategoryQuestionPage: React.FC = () => {
   const [categoryData, setCategoryData] = useState<CategoryType[]>([]);
 
-  // useEffect(()=> {
-
-
-
-  // }, [])
-
-
+  useEffect(() => {
+    async function loadSaveData() {
+      try {
+        const result = await window.electron.ipcRenderer.loadSave();
+        setCategoryData(result);
+      } catch (error) {
+        console.log('got an error');
+      }
+    }
+    loadSaveData();
+  }, []);
 
   const handleSaveData = () => {
     console.log('sent save message');
@@ -62,26 +67,33 @@ const CategoryQuestionPage: React.FC = () => {
   };
 
   const handleLoadSaveData = async () => {
-    console.log('sent load save');
-    // window.electron.ipcRenderer.sendMessage('load-save');
-    const result = await window.electron.ipcRenderer.loadSave();
-    console.log(result);
-    setCategoryData(result);
+    // console.log('sent load save');
+    // // window.electron.ipcRenderer.sendMessage('load-save');
+    // const result = await window.electron.ipcRenderer.loadSave();
+    // console.log("result: ", result);
+    // setCategoryData(result);
     // return result;
   };
 
   const displayCategories = categoryData.map((category) => (
-    <Category category={category} />
+    <Category category={category} setCategory={setCategoryData} />
   ));
 
   return (
     <div>
+
+      <h1>Buttons</h1>
       <button type="button" onClick={handleSaveData}>
         Save Data
       </button>
       <button type="button" onClick={handleLoadSaveData}>
         Load Data
       </button>
+
+      <CreateCategory
+        numCategories={categoryData.length}
+        setCategories={setCategoryData}
+      />
 
       {displayCategories}
     </div>

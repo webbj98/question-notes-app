@@ -9,6 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import fs from 'fs';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -38,17 +39,29 @@ ipcMain.on('save', async (event, arg: Category[]) => {
   event.reply('save', 'Saved data');
 });
 
-ipcMain.on('load-save', async (event) => {
-  const loadedData = loadData();
+ipcMain.handle('load-save', (event) => {
   // Do I use reply or returnValue?
+  try {
+    console.log("about to enter loadData")
 
-  event.reply('load-save', loadedData);
+    // TODO: USE readFile isstead of readFileSync
+    const loadedData = fs.readFileSync('data.json', 'utf8');
+    const dataJson = JSON.parse(loadedData);
+    console.log('loaded data after: ', dataJson);
+    return dataJson;
+  } catch (error) {
+    console.log("Got error while loading: ", error)
+    // TODO: proper error handling
+    return [];
+  }
+
+  // event.reply('load-save', loadedData);
 });
 
-ipcMain.handle('load-save', async () => {
-  const loadedData = loadData();
-  return loadedData;
-});
+// ipcMain.handle('load-save', async () => {
+//   const loadedData = loadData();
+//   return loadedData;
+// });
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
