@@ -4,7 +4,8 @@ import {
   Question as QuestionType,
 } from '../../model';
 import Question from './question';
-import CreateQuestion from '../pages/create_question';
+import CreateQuestion from '../pages/CreateQuestion';
+import { Link } from 'react-router-dom';
 
 const Category: React.FC<{
   category: CategoryType;
@@ -42,6 +43,7 @@ const Category: React.FC<{
     <div>
       <h3>{category.title}</h3>
       <ul>{questionsDisplay}</ul>
+      <Link to={`/categories/${category.id}`}> Text</Link>
 
       <CreateQuestion
         numQuestions={category.questions.length}

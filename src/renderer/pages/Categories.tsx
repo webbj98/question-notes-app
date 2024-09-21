@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Category from '../components/category';
 import { Category as CategoryType, Question } from '../../model';
-import CreateCategory from './create_category';
+import CreateCategoryPage from './CreateCategory';
 // import { ipcRenderer } from 'electron';
 
 // const CATEGORIES = [
@@ -52,7 +52,11 @@ const CategoryQuestionPage: React.FC = () => {
   useEffect(() => {
     async function loadSaveData() {
       try {
+        console.log('do load from CATEGORIES')
         const result = await window.electron.ipcRenderer.loadSave();
+        const result2 = await window.electron.ipcRenderer.testGetFromDB();
+        console.log('result2: ', result2)
+        console.log("RESULT FROM load: ", result)
         setCategoryData(result);
       } catch (error) {
         console.log('got an error');
@@ -81,7 +85,6 @@ const CategoryQuestionPage: React.FC = () => {
 
   return (
     <div>
-
       <h1>Buttons</h1>
       <button type="button" onClick={handleSaveData}>
         Save Data
@@ -90,7 +93,7 @@ const CategoryQuestionPage: React.FC = () => {
         Load Data
       </button>
 
-      <CreateCategory
+      <CreateCategoryPage
         numCategories={categoryData.length}
         setCategories={setCategoryData}
       />

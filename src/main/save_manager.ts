@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Category } from '../model';
+// const fs2 = require('fs');
 // import loadedData from '../../data.json';
 
 // Right now, saving a category saves all our data
@@ -25,8 +26,9 @@ export function loadData(): Category[] {
   // })
   // fr.readAsText('data.json');
   // console.log(result);
-  const loadedData: string = fs.readFileSync('data.json', 'utf8')
-  console.log('Loaded data: ', loadedData);
+
+  const loadedData: string = fs.readFileSync('data.json', 'utf8');
+  console.log('&&&&&&&&&&&Loaded data: ', loadedData);
   return loadedData;
   return [];
 }

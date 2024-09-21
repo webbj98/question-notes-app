@@ -17,7 +17,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { Category } from '../model';
 import saveData, { loadData } from './save_manager';
-
+import getCategories from '../dbFile';
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -56,6 +56,17 @@ ipcMain.handle('load-save', (event) => {
   }
 
   // event.reply('load-save', loadedData);
+});
+
+ipcMain.handle('get-categories', () => {
+  try {
+    console.log('about to get categories');
+    const stuff = getCategories();
+    console.log("categories: ", stuff)
+    return stuff;
+  } catch (error) {
+    console.log('error while getting categories: ', error);
+  }
 });
 
 // ipcMain.handle('load-save', async () => {

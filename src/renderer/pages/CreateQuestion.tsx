@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Question } from '../../model';
 
-const CreateQuestion: React.FC<{
+const CreateQuestionPage: React.FC<{
   numQuestions: number;
   addQuestion: (question: Question, categoryId: number) => void;
 }> = ({ numQuestions, addQuestion }) => {
@@ -24,7 +24,7 @@ const CreateQuestion: React.FC<{
       attempts: [],
       time,
     };
-    addQuestion(question);
+    // addQuestion(question);
     // addQuestion()
   };
   return (
@@ -49,4 +49,4 @@ const CreateQuestion: React.FC<{
   );
 };
 
-export default CreateQuestion;
+export default CreateQuestionPage;

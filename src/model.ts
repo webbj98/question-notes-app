@@ -28,3 +28,4 @@ export interface Category {
 //   RepeatToBeSure = 'Finished but do again to solidify',
 //   Mastered = 'Finshed comfortably first try',
 // }
+

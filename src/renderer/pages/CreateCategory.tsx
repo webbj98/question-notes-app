@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Category } from '../../model';
 
-const CreateCategory: React.FC<{
+const CreateCategoryPage: React.FC<{
   numCategories: number;
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 }> = ({ numCategories, setCategories }) => {
@@ -38,4 +38,4 @@ const CreateCategory: React.FC<{
   );
 };
 
-export default CreateCategory;
+export default CreateCategoryPage;
