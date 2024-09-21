@@ -1,7 +1,8 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import getNames from '../dbFile';
+import getNames from '../dbManager';
+
 export type Channels = 'ipc-example';
 
 const electronHandler = {
@@ -22,7 +23,9 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
     loadSave: () => ipcRenderer.invoke('load-save'),
-    testGetFromDB: () => ipcRenderer.invoke('get-categories'),
+    fetchCategories: () => ipcRenderer.invoke('get-categories'),
+    createCategory: (title: string) =>
+      ipcRenderer.invoke('create-category', title),
   },
 };
 

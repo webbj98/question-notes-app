@@ -17,7 +17,9 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { Category } from '../model';
 import saveData, { loadData } from './save_manager';
-import getCategories from '../dbFile';
+import { getCategories, createCategory } from '../categoryManager';
+import { title } from 'process';
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -39,10 +41,15 @@ ipcMain.on('save', async (event, arg: Category[]) => {
   event.reply('save', 'Saved data');
 });
 
-ipcMain.handle('load-save', (event) => {
+ipcMain.on('create-category', async (event, arg: string) => {
+  createCategory(title);
+  event.reply('')
+})
+
+ipcMain.handle('load-save', () => {
   // Do I use reply or returnValue?
   try {
-    console.log("about to enter loadData")
+    console.log('about to enter loadData');
 
     // TODO: USE readFile isstead of readFileSync
     const loadedData = fs.readFileSync('data.json', 'utf8');
@@ -50,7 +57,7 @@ ipcMain.handle('load-save', (event) => {
     console.log('loaded data after: ', dataJson);
     return dataJson;
   } catch (error) {
-    console.log("Got error while loading: ", error)
+    console.log('Got error while loading: ', error);
     // TODO: proper error handling
     return [];
   }
@@ -61,13 +68,26 @@ ipcMain.handle('load-save', (event) => {
 ipcMain.handle('get-categories', () => {
   try {
     console.log('about to get categories');
-    const stuff = getCategories();
-    console.log("categories: ", stuff)
-    return stuff;
+    const categories = getCategories();
+    console.log('categories: ', categories);
+    return categories;
   } catch (error) {
     console.log('error while getting categories: ', error);
+    return error;
   }
 });
+
+ipcMain.handle('create-category', async (event, arg) => {
+  try {
+    console.log('about to create a category with args: ', arg);
+    const resultInfo = createCategory(arg);
+    console.log('resultINfo: ', resultInfo);
+    return resultInfo;
+  } catch (error) {
+    console.log('error: ', error);
+    return error;
+  }
+})
 
 // ipcMain.handle('load-save', async () => {
 //   const loadedData = loadData();

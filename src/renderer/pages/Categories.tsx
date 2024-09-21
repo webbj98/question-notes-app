@@ -54,7 +54,7 @@ const CategoryQuestionPage: React.FC = () => {
       try {
         console.log('do load from CATEGORIES')
         const result = await window.electron.ipcRenderer.loadSave();
-        const result2 = await window.electron.ipcRenderer.testGetFromDB();
+        const result2 = await window.electron.ipcRenderer.fetchCategories();
         console.log('result2: ', result2)
         console.log("RESULT FROM load: ", result)
         setCategoryData(result);

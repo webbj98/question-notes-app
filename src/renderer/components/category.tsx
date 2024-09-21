@@ -1,11 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Category as CategoryType,
   Question as QuestionType,
 } from '../../model';
 import Question from './question';
 import CreateQuestion from '../pages/CreateQuestion';
-import { Link } from 'react-router-dom';
 
 const Category: React.FC<{
   category: CategoryType;

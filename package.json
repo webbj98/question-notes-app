@@ -46,7 +46,8 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
   },
   "browserslist": [],
   "prettier": {
@@ -97,7 +98,7 @@
   },
   "dependencies": {
     "@electron/notarize": "^2.3.2",
-    "better-sqlite3-with-prebuilds": "^7.4.3",
+    "better-sqlite3": "^11.3.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^6.1.4",
@@ -131,6 +132,7 @@
     "electron": "^26.2.1",
     "electron-builder": "^24.13.3",
     "electron-devtools-installer": "^3.2.0",
+    "electron-rebuild": "^3.2.9",
     "electronmon": "^2.0.2",
     "eslint": "^8.49.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -227,7 +229,10 @@
       "output": "release/build"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      "../sqlitedata.db",
+      "./testdb.db"
+
     ],
     "publish": {
       "provider": "github",
