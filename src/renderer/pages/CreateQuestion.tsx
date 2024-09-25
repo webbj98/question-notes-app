@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Question } from '../../model';
 
 const CreateQuestionPage: React.FC<{
-  numQuestions: number;
-  addQuestion: (question: Question, categoryId: number) => void;
-}> = ({ numQuestions, addQuestion }) => {
+  categoryId: number;
+}> = ({ categoryId }) => {
   const [title, setTitle] = useState('');
   const [time, setTime] = useState(0);
 
@@ -16,14 +15,21 @@ const CreateQuestionPage: React.FC<{
     setTime(Number(value));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const question: Question = {
-      id: numQuestions + 1,
+    console.log('title: ', title);
+    const newQuestion = await window.electron.ipcRenderer.createQuestion(
       title,
-      attempts: [],
       time,
-    };
+      categoryId,
+    );
+    console.log('new Quest: ', newQuestion);
+    // const question: Question = {
+    //   id: numQuestions + 1,
+    //   title,
+    //   attempts: [],
+    //   time,
+    // };
     // addQuestion(question);
     // addQuestion()
   };

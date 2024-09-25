@@ -17,7 +17,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { Category } from '../model';
 import saveData, { loadData } from './save_manager';
-import { getCategories, createCategory } from '../categoryManager';
+import { getCategories, createCategory, getQuestionsByCategoryId, createQuestion } from '../categoryManager';
 import { title } from 'process';
 
 class AppUpdater {
@@ -87,7 +87,37 @@ ipcMain.handle('create-category', async (event, arg) => {
     console.log('error: ', error);
     return error;
   }
-})
+});
+
+ipcMain.handle('get-questions-by-category-id', async (event, arg: number) => {
+  try {
+    console.log('about to get questions by categoryId: ', arg);
+    const questions = getQuestionsByCategoryId(arg);
+    console.log('questions: ', questions);
+    return questions;
+  } catch (error) {
+    console.log('error: ', error);
+    return error;
+  }
+});
+
+interface CreateQuestionInput {
+  title: string;
+  time: number;
+  categoryId: number;
+}
+
+ipcMain.handle('create-question', async (event, args: CreateQuestionInput) => {
+  try {
+    console.log('about to create Questions args: ', args);
+    const resultInfo = createQuestion(args.title, args.time, args.categoryId);
+    console.log('result after create question: ', resultInfo);
+    return resultInfo;
+  } catch (error) {
+    console.log('error: ', error);
+    return error;
+  }
+});
 
 // ipcMain.handle('load-save', async () => {
 //   const loadedData = loadData();

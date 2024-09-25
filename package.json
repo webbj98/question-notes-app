@@ -41,13 +41,12 @@
     "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
     "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never && npm run build:dll",
-    "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest",
-    "rebuild": "electron-rebuild -f -w better-sqlite3"
+    "test": "jest"
   },
   "browserslist": [],
   "prettier": {
@@ -115,7 +114,7 @@
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.5",
     "@types/node": "20.6.2",
-    "@types/react": "^18.2.21",
+    "@types/react": "^18.3.8",
     "@types/react-dom": "^18.2.7",
     "@types/react-test-renderer": "^18.0.1",
     "@types/webpack-bundle-analyzer": "^4.6.0",
@@ -232,7 +231,6 @@
       "./assets/**",
       "../sqlitedata.db",
       "./testdb.db"
-
     ],
     "publish": {
       "provider": "github",

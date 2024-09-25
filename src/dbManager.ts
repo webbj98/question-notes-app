@@ -6,8 +6,8 @@ const path = require('path');
 // may need to do this
 const dbPath =
   process.env.NODE_ENV === 'development'
-    ? './sqlitedata.db'
-    : path.join(process.resourcesPath, './sqlitedata.db');
+    ? './question_notes.db'
+    : path.join(process.resourcesPath, './question_notes.db');
 console.log("Current Directory:", process.cwd());
 console.log("Database Path:", dbPath);
 const db = new Database(dbPath);

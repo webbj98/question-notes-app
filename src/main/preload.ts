@@ -2,6 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import getNames from '../dbManager';
+import { createQuestion, getQuestionsByCategoryId } from '../categoryManager';
 
 export type Channels = 'ipc-example';
 
@@ -26,6 +27,10 @@ const electronHandler = {
     fetchCategories: () => ipcRenderer.invoke('get-categories'),
     createCategory: (title: string) =>
       ipcRenderer.invoke('create-category', title),
+    getQuestionsByCategoryId: (id: number) =>
+      ipcRenderer.invoke('get-questions-by-category-id', id),
+    createQuestion: (title: string, time: number, categoryId: number) =>
+      ipcRenderer.invoke('create-question', { title, time, categoryId }),
   },
 };
 

@@ -13,6 +13,8 @@ const CreateCategoryPage: React.FC<{
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const result = window.electron.ipcRenderer.createCategory(title);
+    console.log('created category: ', result);
     setCategories((curCategories) => {
       const newCategory: Category = {
         id: numCategories + 1,

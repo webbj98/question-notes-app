@@ -12,11 +12,11 @@ const Category: React.FC<{
   setCategory: React.Dispatch<React.SetStateAction<CategoryType[]>>;
 }> = ({ category, setCategory }) => {
   // TODO
-  const questionsDisplay = category.questions.map((question) => (
-    <li key={question.id}>
-      <Question question={question} />
-    </li>
-  ));
+  // const questionsDisplay = category.questions.map((question) => (
+  //   <li key={question.id}>
+  //     <Question question={question} />
+  //   </li>
+  // ));
 
   const handleAddQuestion = (question: QuestionType) => {
     setCategory((curCategories) => {
@@ -42,13 +42,13 @@ const Category: React.FC<{
   return (
     <div>
       <h3>{category.title}</h3>
-      <ul>{questionsDisplay}</ul>
+      {/* <ul>{questionsDisplay}</ul> */}
       <Link to={`/categories/${category.id}`}> Text</Link>
 
-      <CreateQuestion
+      {/* <CreateQuestion
         numQuestions={category.questions.length}
         addQuestion={handleAddQuestion}
-      />
+      /> */}
     </div>
   );
 };

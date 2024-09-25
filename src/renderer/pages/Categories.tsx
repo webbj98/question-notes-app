@@ -52,12 +52,12 @@ const CategoryQuestionPage: React.FC = () => {
   useEffect(() => {
     async function loadSaveData() {
       try {
-        console.log('do load from CATEGORIES')
-        const result = await window.electron.ipcRenderer.loadSave();
+        console.log('do load from CATEGORIES');
+        // const result = await window.electron.ipcRenderer.loadSave();
         const result2 = await window.electron.ipcRenderer.fetchCategories();
-        console.log('result2: ', result2)
-        console.log("RESULT FROM load: ", result)
-        setCategoryData(result);
+        console.log('result2: ', result2);
+        // console.log("RESULT FROM load: ", result);
+        setCategoryData(result2);
       } catch (error) {
         console.log('got an error');
       }
