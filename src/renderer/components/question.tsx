@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Question as QuestionType } from '../../model';
 import Attempt from './attempt';
 
@@ -9,6 +10,7 @@ const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
       <h4>{question.title}</h4>
       <p>Time: {question.time}</p>
       <h5>Attempt History</h5>
+      <Link to={`/questions/${question.id}`}>Question Page</Link>
       {/* {attemptHistoryDisplay} */}
     </div>
   );

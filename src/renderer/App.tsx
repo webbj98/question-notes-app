@@ -15,6 +15,7 @@ import CategoryDetailsPage, {
 } from './pages/CategoryDetails';
 import RootLayoutPage from './pages/RootLayout';
 import NotFoundPage from './pages/NotFound';
+import QuestionDetailsPage, {loader as questionDetailsLoader} from './pages/QuestionDetails';
 
 function Hello() {
   return (
@@ -38,6 +39,11 @@ export default function App() {
       path: '/categories/:id',
       element: <CategoryDetailsPage />,
       loader: categoryDetailsLoader,
+    },
+    {
+      path: '/questions/:id',
+      element: <QuestionDetailsPage />,
+      loader: questionDetailsLoader,
     },
   ]);
 

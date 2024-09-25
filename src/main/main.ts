@@ -15,9 +15,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { Category } from '../model';
+import { Attempt, Category, Question } from '../model';
 import saveData, { loadData } from './save_manager';
-import { getCategories, createCategory, getQuestionsByCategoryId, createQuestion } from '../categoryManager';
+import { getCategories, createCategory, getQuestionsByCategoryId, createQuestion, getAttemptsByQuestionId, getQuestionById } from '../categoryManager';
 import { title } from 'process';
 
 class AppUpdater {
@@ -97,6 +97,30 @@ ipcMain.handle('get-questions-by-category-id', async (event, arg: number) => {
     return questions;
   } catch (error) {
     console.log('error: ', error);
+    return error;
+  }
+});
+
+ipcMain.handle('get-question-by-id', async (event, arg: number) => {
+  try {
+    console.log('about to get question by id: ', arg);
+    const question: Question = getQuestionById(arg);
+    console.log('question: ', question);
+    return question;
+  } catch (error) {
+    console.log('error while getting question by id', error);
+    return error;
+  }
+});
+
+ipcMain.handle('get-attempts-by-question-id', async (event, arg: number) => {
+  try {
+    console.log('about to get attempt by question id: ', arg);
+    const attempts: Attempt[] = getAttemptsByQuestionId(arg);
+    console.log('attempts: ', attempts);
+    return attempts;
+  } catch (error) {
+    console.log('error while getting attempts by questionId: ', error);
     return error;
   }
 });

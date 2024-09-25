@@ -2,15 +2,17 @@ export interface Attempt {
   id: number;
   // title: string;
   date: Date;
-  performanceCategory: string;
+  performanceCategoryId: number;
+  questionId: number;
   timeTaken: number; // minutes
 }
 
 export interface Question {
   id: number;
   title: string;
-  attempts: Attempt[];
+  // attempts: Attempt[];
   time: number; // minutes
+  categoryId: number;
 }
 
 export interface Category {

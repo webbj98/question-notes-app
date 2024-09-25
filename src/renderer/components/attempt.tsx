@@ -5,7 +5,7 @@ const Attempt: React.FC<{ attempt: AttemptType }> = ({ attempt }) => {
   return (
     <div>
       <p>Date: {attempt.date.toLocaleString()}</p>
-      <p>Category {attempt.performanceCategory}</p>
+      <p>Category {attempt.performanceCategoryId}</p>
       <p>Time Taken: {attempt.timeTaken}</p>
     </div>
   );

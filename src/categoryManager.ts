@@ -17,6 +17,8 @@ export const getCategories = () => {
   }
 };
 
+// TODO: Make getCategoryById
+
 export const createCategory = (title: string) => {
   try {
     const query = `INSERT INTO CATEGORIES (title) VALUES(?)`;
@@ -33,8 +35,8 @@ export const getQuestionsByCategoryId = (id: number) => {
   try {
     const query = `SELECT * FROM QUESTIONS q WHERE q.categoryID = ?`;
     const readQuery = db.prepare(query);
-    const question = readQuery.all(id);
-    return question;
+    const questions = readQuery.all(id);
+    return questions;
   } catch (error) {
     console.log(error);
     throw error;
@@ -57,4 +59,31 @@ export const createQuestion = (
     throw error;
   }
 };
+
+export const getQuestionById = (id: number) => {
+  try {
+    const query = 'SELECT * FROM QUESTIONS q WHERE q.id = ?';
+    const readQuery = db.prepare(query);
+    const question = readQuery.get(id);
+    console.log('resut question from id: ', question);
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getAttemptsByQuestionId = (questionId: number) => {
+  try {
+    const query = 'SELECT * FROM ATTEMPTS a WHERE a.questionId = ?';
+    const readQuery = db.prepare(query);
+    const attempts = readQuery.all(questionId);
+    console.log('attempts after query: ', attempts);
+    return attempts;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // export default getCategories;
