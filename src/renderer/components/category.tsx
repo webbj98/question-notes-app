@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Category as CategoryType,
@@ -17,6 +17,13 @@ const Category: React.FC<{
   //     <Question question={question} />
   //   </li>
   // ));
+  const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+
+
+  // })
+
+
 
   const handleAddQuestion = (question: QuestionType) => {
     setCategory((curCategories) => {

@@ -86,4 +86,27 @@ export const getAttemptsByQuestionId = (questionId: number) => {
   }
 };
 
+export const createAttempt = (
+  date: string,
+  timeTaken: number,
+  performanceCategoryId: number,
+  questionId: number,
+) => {
+  try {
+    const query =
+      'INSERT INTO ATTEMPTS (date, timeTaken, performanceCategoryId, questionId ) VALUES(?, ?, ?, ?)';
+    const writeQuery = db.prepare(query);
+    const attemptInfo = writeQuery.run(
+      date,
+      timeTaken,
+      performanceCategoryId,
+      questionId,
+    );
+    return attemptInfo;
+  } catch (error) {
+    console.log('create attempt error: ', error);
+    return error;
+  }
+};
+
 // export default getCategories;

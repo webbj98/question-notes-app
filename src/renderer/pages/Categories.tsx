@@ -48,7 +48,6 @@ const TEST_DATA: CategoryType[] = [
 ];
 const CategoryQuestionPage: React.FC = () => {
   const [categoryData, setCategoryData] = useState<CategoryType[]>([]);
-
   useEffect(() => {
     async function loadSaveData() {
       try {
@@ -104,3 +103,7 @@ const CategoryQuestionPage: React.FC = () => {
 };
 
 export default CategoryQuestionPage;
+
+// export async function loader({}) {
+
+// }

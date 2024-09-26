@@ -13,12 +13,20 @@ import fs from 'fs';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { title } from 'process';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { Attempt, Category, Question } from '../model';
 import saveData, { loadData } from './save_manager';
-import { getCategories, createCategory, getQuestionsByCategoryId, createQuestion, getAttemptsByQuestionId, getQuestionById } from '../categoryManager';
-import { title } from 'process';
+import {
+  getCategories,
+  createCategory,
+  getQuestionsByCategoryId,
+  createQuestion,
+  getAttemptsByQuestionId,
+  getQuestionById,
+  createAttempt,
+} from '../categoryManager';
 
 class AppUpdater {
   constructor() {
@@ -43,8 +51,8 @@ ipcMain.on('save', async (event, arg: Category[]) => {
 
 ipcMain.on('create-category', async (event, arg: string) => {
   createCategory(title);
-  event.reply('')
-})
+  event.reply('');
+});
 
 ipcMain.handle('load-save', () => {
   // Do I use reply or returnValue?
@@ -136,6 +144,28 @@ ipcMain.handle('create-question', async (event, args: CreateQuestionInput) => {
     console.log('about to create Questions args: ', args);
     const resultInfo = createQuestion(args.title, args.time, args.categoryId);
     console.log('result after create question: ', resultInfo);
+    return resultInfo;
+  } catch (error) {
+    console.log('error: ', error);
+    return error;
+  }
+});
+
+interface CreateAttemptInput {
+  date: string;
+  timeTaken: number;
+  performanceCategoryId: number;
+  questionId: number;
+}
+ipcMain.handle('create-attempt', async (event, args: CreateAttemptInput) => {
+  try {
+    console.log('about to create attempt with args: ', args);
+    const resultInfo = createAttempt(
+      args.date,
+      args.timeTaken,
+      args.performanceCategoryId,
+      args.questionId,
+    );
     return resultInfo;
   } catch (error) {
     console.log('error: ', error);

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, Link } from 'react-router-dom';
 import {
   Attempt as AttemptType,
   Question as QuestionType,
   Category as CategoryType,
 } from '../../model';
 import Attempt from '../components/attempt';
+import CreateAttemptPage from './CreateAttempt';
 
 interface LoaderData {
   question: QuestionType;
@@ -17,7 +18,7 @@ const QuestionDetailsPage: React.FC = () => {
   const { question, currentCategory, questionAttempts }: LoaderData =
     useLoaderData();
 
-    console.log('ques attempts:  ', questionAttempts)
+  console.log('ques attempts:  ', questionAttempts);
 
   const attemptHistoryDisplay = questionAttempts.map((attempt) => (
     <Attempt attempt={attempt} />
@@ -28,6 +29,15 @@ const QuestionDetailsPage: React.FC = () => {
       <h3>Time: {question.time} </h3>
       <h3>Category: {currentCategory.title}</h3>
       {attemptHistoryDisplay}
+
+      <CreateAttemptPage
+        categoryId={currentCategory.id}
+        questionId={question.id}
+      />
+
+      <button type="button">
+        <Link to={`/categories/${currentCategory.id}`}>Back</Link>
+      </button>
     </div>
   );
 };
@@ -50,7 +60,7 @@ export async function loader({ request, params }) {
     const targetCategory = categories.filter(
       (category) => category.id === question.categoryId,
     )[0];
-    console.log('target category: ', targetCategory)
+    console.log('target category: ', targetCategory);
 
     const attempts: AttemptType[] =
       await window.electron.ipcRenderer.getAttemptsByQuestionId(id);

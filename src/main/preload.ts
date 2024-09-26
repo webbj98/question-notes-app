@@ -39,6 +39,18 @@ const electronHandler = {
       ipcRenderer.invoke('create-question', { title, time, categoryId }),
     getAttemptsByQuestionId: (questionId: number) =>
       ipcRenderer.invoke('get-attempts-by-question-id', questionId),
+    createAttempt: (
+      date: string,
+      timeTaken: number,
+      performanceCategoryId: number,
+      questionId: number,
+    ) =>
+      ipcRenderer.invoke('create-attempt', {
+        date,
+        timeTaken,
+        performanceCategoryId,
+        questionId,
+      }),
   },
 };
 
