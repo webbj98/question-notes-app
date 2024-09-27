@@ -18,7 +18,7 @@ export interface Question {
 export interface Category {
   id: number;
   title: string;
-  questions: Question[];
+  // questions: Question[];
 }
 
 // export enum Categories {

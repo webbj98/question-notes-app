@@ -1,0 +1,16 @@
+.attemptCard {
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  flex-direction: column;
+  background-color: ghostwhite;
+  color: black;
+}
+
+.attemptCard > div {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

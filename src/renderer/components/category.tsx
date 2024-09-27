@@ -6,6 +6,7 @@ import {
 } from '../../model';
 import Question from './question';
 import CreateQuestion from '../pages/CreateQuestion';
+import './category.css';
 
 const Category: React.FC<{
   category: CategoryType;
@@ -18,12 +19,19 @@ const Category: React.FC<{
   //   </li>
   // ));
   const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-
-
-  // })
-
-
+  const [categoryQuestions, setCategoryQuestions] = useState<QuestionType[]>(
+    [],
+  );
+  useEffect(() => {
+    async function getCategoryQuestions() {
+      const currCategoryQuestions: QuestionType[] =
+        await window.electron.ipcRenderer.getQuestionsByCategoryId(category.id);
+      setCategoryQuestions(currCategoryQuestions);
+    }
+    setLoading(true);
+    getCategoryQuestions();
+    setLoading(false);
+  }, [category.id]);
 
   const handleAddQuestion = (question: QuestionType) => {
     setCategory((curCategories) => {
@@ -46,11 +54,25 @@ const Category: React.FC<{
     });
   };
 
+  const questionsDisplay = categoryQuestions.map((question: QuestionType) => {
+    return (
+      <div>
+        <Link to={`/questions/${question.id}`}>{question.title}</Link>
+      </div>
+    );
+  });
+
   return (
     <div>
-      <h3>{category.title}</h3>
-      {/* <ul>{questionsDisplay}</ul> */}
-      <Link to={`/categories/${category.id}`}> Text</Link>
+      <h3>
+        <Link to={`/categories/${category.id}`} className="categoryTitle">
+          {' '}
+          {category.title}
+        </Link>
+      </h3>
+
+      {/* TODO: make loading symbol */}
+      <ul>{questionsDisplay}</ul>
 
       {/* <CreateQuestion
         numQuestions={category.questions.length}

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Question } from '../../model';
 
 const CreateQuestionPage: React.FC<{
   categoryId: number;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData, Link } from 'react-router-dom';
 import {
   Attempt as AttemptType,
@@ -7,22 +7,34 @@ import {
 } from '../../model';
 import Attempt from '../components/attempt';
 import CreateAttemptPage from './CreateAttempt';
+import { CategoryContext } from '../store/categoryContext';
 
 interface LoaderData {
   question: QuestionType;
+  categories: CategoryType[];
   questionAttempts: AttemptType[];
   currentCategory: CategoryType;
 }
 
 const QuestionDetailsPage: React.FC = () => {
-  const { question, currentCategory, questionAttempts }: LoaderData =
-    useLoaderData();
+  const {
+    question,
+    categories,
+    currentCategory,
+    questionAttempts,
+  }: LoaderData = useLoaderData();
+
+  const categoryContext = useContext(CategoryContext);
 
   console.log('ques attempts:  ', questionAttempts);
 
   const attemptHistoryDisplay = questionAttempts.map((attempt) => (
     <Attempt attempt={attempt} />
   ));
+  console.log(
+    'category title: ',
+    categoryContext.onGetCategoryTitleById(currentCategory.id),
+  );
   return (
     <div>
       <h1>{question.title}</h1>
@@ -33,6 +45,7 @@ const QuestionDetailsPage: React.FC = () => {
       <CreateAttemptPage
         categoryId={currentCategory.id}
         questionId={question.id}
+        categories={categories}
       />
 
       <button type="button">
@@ -68,6 +81,7 @@ export async function loader({ request, params }) {
     console.log('attempts:, ', attempts);
     return {
       question,
+      categories,
       currentCategory: targetCategory,
       questionAttempts: attempts,
     };

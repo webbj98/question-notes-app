@@ -6,7 +6,9 @@ const AttemptHistory: React.FC<{ attempts: AttemptType[] }> = ({
   attempts,
 }) => {
   const attemptHistoryDisplay = attempts.map((attempt) => (
-    <Attempt attempt={attempt} />
+    <p>
+      <Attempt attempt={attempt} />
+    </p>
   ));
   return <div>{attemptHistoryDisplay}</div>;
 };

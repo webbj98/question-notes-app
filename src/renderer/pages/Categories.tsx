@@ -105,5 +105,11 @@ const CategoryQuestionPage: React.FC = () => {
 export default CategoryQuestionPage;
 
 // export async function loader({}) {
+//   try {
+//     const categories = await window.electron.ipcRenderer.fetchCategories();
+//     const questions = await window.electron.ipcRenderer.getQuestionsByCategoryId()
+//   } catch (error) {
+
+//   }
 
 // }

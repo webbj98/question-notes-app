@@ -7,6 +7,7 @@ import {
   getQuestionsByCategoryId,
   getQuestionsById,
 } from '../categoryManager';
+import { Question } from '../model';
 
 export type Channels = 'ipc-example';
 
@@ -31,7 +32,7 @@ const electronHandler = {
     fetchCategories: () => ipcRenderer.invoke('get-categories'),
     createCategory: (title: string) =>
       ipcRenderer.invoke('create-category', title),
-    getQuestionsById: (id: number) =>
+    getQuestionsById: (id: number): Promise<Question> =>
       ipcRenderer.invoke('get-question-by-id', id),
     getQuestionsByCategoryId: (id: number) =>
       ipcRenderer.invoke('get-questions-by-category-id', id),

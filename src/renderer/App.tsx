@@ -15,7 +15,10 @@ import CategoryDetailsPage, {
 } from './pages/CategoryDetails';
 import RootLayoutPage from './pages/RootLayout';
 import NotFoundPage from './pages/NotFound';
-import QuestionDetailsPage, {loader as questionDetailsLoader} from './pages/QuestionDetails';
+import QuestionDetailsPage, {
+  loader as questionDetailsLoader,
+} from './pages/QuestionDetails';
+import CategoryContextProvider from './store/categoryContext';
 
 function Hello() {
   return (
@@ -66,8 +69,6 @@ export default function App() {
   //   ),
   // );
 
-
-
   // return (
   //   <BrowserRouter>
   //     <Routes>
@@ -89,7 +90,11 @@ export default function App() {
   //     </Routes>
   //   </BrowserRouter>
   // );
-  return <RouterProvider router={router} />;
+  return (
+    <CategoryContextProvider>
+      <RouterProvider router={router} />
+    </CategoryContextProvider>
+  );
   // return (
   //   <Router>
   //     <Routes>

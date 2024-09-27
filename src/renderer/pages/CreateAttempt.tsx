@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Category } from '../../model';
 
 const CreateAttemptPage: React.FC<{
   questionId: number;
   categoryId: number;
-}> = ({ questionId, categoryId }) => {
+  categories: Category[];
+}> = ({ questionId, categoryId, categories }) => {
   const [date, setDate] = useState('');
   const [timeTaken, setTImeTaken] = useState(0);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(categoryId);
 
   const handleChangeDate = (dateVal: string) => {
     setDate(dateVal);
@@ -16,17 +19,25 @@ const CreateAttemptPage: React.FC<{
     setTImeTaken(Number(timeTakenVal));
   };
 
+  const handleChangeCategory = (curCategoryId: string) => {
+    setSelectedCategoryId(Number(curCategoryId));
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const attemptInfo = await window.electron.ipcRenderer.createAttempt(
       date,
       timeTaken,
-      categoryId,
+      selectedCategoryId,
       questionId,
     );
     console.log('attempt info: ', attemptInfo);
   };
+
+  const categoryOptions = categories.map((category) => (
+    <option value={category.id}>{category.title}</option>
+  ));
 
   return (
     <div>
@@ -46,7 +57,16 @@ const CreateAttemptPage: React.FC<{
           value={timeTaken}
           onChange={(event) => handleChangeTimeTaken(event.target.value)}
         />
-        <button type='submit'>Submit</button>
+
+        <label htmlFor="performanceCategory" />
+        <select
+          name="performanceCategory"
+          id="performanceCategory"
+          onChange={(event) => handleChangeCategory(event.target.value)}
+        >
+          {categoryOptions}
+        </select>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
